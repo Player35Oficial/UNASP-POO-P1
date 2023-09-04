@@ -11,6 +11,7 @@ class Program
 
         do
         {
+            Console.WriteLine();
             Console.WriteLine("Bem-vindo ao projeto de Pizzaria!");
 
             Console.WriteLine("Escolha uma opção:");
@@ -21,7 +22,7 @@ class Program
             Console.WriteLine("55 - SAIR");
 
             Console.WriteLine("Digite sua opção:");
-            opcao = Int32.Parse(Console.ReadLine());
+            opcao = Int32.Parse(Console.ReadLine()!);
 
             if (opcao == 1)
             {
@@ -29,13 +30,13 @@ class Program
                 Console.WriteLine("Adicionar Pizza!");
 
                 Console.WriteLine("Digite o nome da Pizza: ");
-                string nome_pizza = Console.ReadLine();
+                string nome_pizza = Console.ReadLine()!;
 
                 Console.WriteLine("Digite os sabores da pizza (Separados por vírgula): ");
-                string sabores_pizza = Console.ReadLine();
+                string sabores_pizza = Console.ReadLine()!;
 
                 Console.WriteLine("Digite o preço da Pizza: ");
-                float valor_pizza = float.Parse(Console.ReadLine());
+                float valor_pizza = float.Parse(Console.ReadLine()!);
 
                 pizza.nome = nome_pizza;
                 pizza.sabores = sabores_pizza;
@@ -61,10 +62,10 @@ class Program
                 Console.WriteLine("Adicionar Pedido!");
 
                 Console.WriteLine("Digite o nome do Cliente: ");
-                string nome_cliente = Console.ReadLine();
+                string nome_cliente = Console.ReadLine()!;
 
                 Console.WriteLine("Digite o Telefone do Cliente: ");
-                int telefone_cliente = Int32.Parse(Console.ReadLine());
+                string telefone_cliente = Console.ReadLine()!;
 
                 Console.WriteLine("Escolha uma pizza para adicionar: ");
                 foreach (Pizza pizza in listaPizzas)
@@ -75,23 +76,42 @@ class Program
                 int opcaoPedidos = 0;
                 do
                 {
-                    var PizzaByName = Console.ReadLine();
+                    var PizzaByName = Console.ReadLine()!;
+                    Pizza pizzaEncontrada = listaPizzas.Find(item => item.nome == PizzaByName)!;
+                    if (pizzaEncontrada != null)
+                    {
+                        pedido.pizzas_pedido!.Add(pizzaEncontrada);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Pizza não encontrada. Verifique o nome.");
+                    }
+                    Console.WriteLine("Pizzas no pedido:");
+                    // foreach (Pizza pizza in pedido.pizzas_pedido!)
+                    // {
+                    //     Console.WriteLine("Nome: " + pizza.nome);
+                    //     Console.WriteLine("Sabores: " + pizza.sabores);
+                    //     Console.WriteLine("Preço: " + pizza.preco);
+                    //     Console.WriteLine(); // Adicione uma linha em branco para separar as pizzas
+                    // }
 
-                    var indexOfSelected = listaPizzas.IndexOf(PizzaByName);
-                    pedido.pizzas_pedido.add(indexOfSelected);
 
-
-                    Console.WriteLine("Deseja acrescentar mais uma pizza? (1 - SIM | 2 - NÃO)");
-                    opcaoPedidos = Int32.Parse(Console.ReadLine());
-                    Console.WriteLine("Escolha uma pizza para adicionar: ");
+                    Console.WriteLine("Deseja acrescentar uma pizza? (1 - SIM | 2 - NÃO)");
+                    opcaoPedidos = Int32.Parse(Console.ReadLine()!);
+                    if (opcaoPedidos == 1)
+                    {
+                        Console.WriteLine("Escolha uma pizza para adicionar: ");
+                    }
                 } while (opcaoPedidos != 2);
 
                 // Calcular valor final do Pedido;
                 double valorFinal = 0.0;
-                foreach (int index in pedido.pizzas_pedido)
+                foreach (Pizza pizza in pedido.pizzas_pedido!)
                 {
-                    valorFinal += listaPizzas[index].preco;
+                    Console.WriteLine("Preço: " + pizza.preco);
+                    valorFinal += pizza.preco;
                 }
+                Console.WriteLine("Preço Final: " + valorFinal);
 
                 pedido.nome_cliente = nome_cliente;
                 pedido.telefone_cliente = telefone_cliente;
@@ -108,8 +128,13 @@ class Program
                     Console.WriteLine("\n");
                     Console.WriteLine("<===============>");
                     Console.WriteLine("Cliente: " + umPedido.nome_cliente + " " + umPedido.telefone_cliente);
-                    Console.WriteLine("Pizzas do Pedido: " + umPedido.pizzas_pedido);
+                    Console.WriteLine("Pizzas do Pedido: ");
+                    foreach (Pizza pizza in umPedido.pizzas_pedido!)
+                    {
+                        Console.WriteLine(pizza.nome + " - R$ " + pizza.preco);
+                    }
                     Console.WriteLine("Valor Final: " + umPedido.valorFinal_pedido);
+                    Console.WriteLine();
                 }
             }
         } while (opcao != 55);
