@@ -19,6 +19,7 @@ class Program
             Console.WriteLine("2 - Listar Pizzas");
             Console.WriteLine("3 - Criar Novo Pedido");
             Console.WriteLine("4 - Listar Pedidos");
+            Console.WriteLine("5 - Pagar Pedido");
             Console.WriteLine("55 - SAIR");
 
             Console.WriteLine("Digite sua opção:");
@@ -87,14 +88,6 @@ class Program
                         Console.WriteLine("Pizza não encontrada. Verifique o nome.");
                     }
                     Console.WriteLine("Pizzas no pedido:");
-                    // foreach (Pizza pizza in pedido.pizzas_pedido!)
-                    // {
-                    //     Console.WriteLine("Nome: " + pizza.nome);
-                    //     Console.WriteLine("Sabores: " + pizza.sabores);
-                    //     Console.WriteLine("Preço: " + pizza.preco);
-                    //     Console.WriteLine(); // Adicione uma linha em branco para separar as pizzas
-                    // }
-
 
                     Console.WriteLine("Deseja acrescentar uma pizza? (1 - SIM | 2 - NÃO)");
                     opcaoPedidos = Int32.Parse(Console.ReadLine()!);
@@ -116,6 +109,7 @@ class Program
                 pedido.nome_cliente = nome_cliente;
                 pedido.telefone_cliente = telefone_cliente;
                 pedido.valorFinal_pedido = valorFinal;
+                pedido.valorPendente_pedido = pedido.valorFinal_pedido;
 
                 listaPedidos.Add(pedido);
                 Console.WriteLine("PEDIDO CRIADO!");
@@ -127,16 +121,77 @@ class Program
                 {
                     Console.WriteLine("\n");
                     Console.WriteLine("<===============>");
+                    Console.WriteLine("ID_Cliente: " + umPedido.numeroPedido);
                     Console.WriteLine("Cliente: " + umPedido.nome_cliente + " " + umPedido.telefone_cliente);
                     Console.WriteLine("Pizzas do Pedido: ");
                     foreach (Pizza pizza in umPedido.pizzas_pedido!)
                     {
                         Console.WriteLine(pizza.nome + " - R$ " + pizza.preco);
                     }
-                    Console.WriteLine("Valor Final: " + umPedido.valorFinal_pedido);
+                    Console.WriteLine("Total: " + umPedido.valorFinal_pedido);
+                    Console.WriteLine("Quanto falta para pagar: " + umPedido.valorPendente_pedido);
+                    Console.WriteLine("Pago: " + ((bool)umPedido.pago! ? "Sim" : "Não"));
                     Console.WriteLine();
                 }
             }
+            else if (opcao == 5)
+            {
+                Console.WriteLine("Qual o número do pedido:");
+                int numeroPedido = Int32.Parse(Console.ReadLine()!);
+
+                Pedido pedidoSelecionado = listaPedidos.FirstOrDefault(pedido => pedido.numeroPedido == numeroPedido)!;
+
+                if (pedidoSelecionado != null)
+                {
+                    Console.WriteLine($"Cliente: {pedidoSelecionado.nome_cliente} - Falta: R$ {pedidoSelecionado.valorPendente_pedido}");
+                    Console.WriteLine("Digite a forma de pagamento (1 - Dinheiro, 2 - Cartão):");
+                    int formaPagamento = Int32.Parse(Console.ReadLine()!);
+
+                    if (formaPagamento == 1)
+                    {
+                        Console.WriteLine("Qual o valor:");
+                        double valorPago = double.Parse(Console.ReadLine()!);
+
+                        // O que foi pago é exatamento o valor do pedido
+                        if (valorPago == pedidoSelecionado.valorPendente_pedido)
+                        {
+                            pedidoSelecionado.valorPendente_pedido = 0;
+                            Console.WriteLine($"VALOR RECEBIDO COM SUCESSO\nTOTAL PAGO: R$ {valorPago} (DINHEIRO)");
+                            pedidoSelecionado.pago = true;
+                        }
+                        // O que foi pago é acima do valor do pedido
+                        else if (valorPago > pedidoSelecionado.valorPendente_pedido)
+                        {
+                            double? diff = pedidoSelecionado.valorPendente_pedido - valorPago;
+                            double? positiveDiff = Math.Abs((double)diff);
+                            Console.WriteLine($"VALOR RECEBIDO COM SUCESSO \n TOTAL PAGO: R$ {valorPago} (DINHEIRO)");
+                            Console.WriteLine($"Troco: R$ {positiveDiff}");
+                            pedidoSelecionado.valorPendente_pedido = 0;
+                            pedidoSelecionado.pago = true;
+                        }
+                        // O que foi pago é (provavelmente) abaixo do valor do pedido
+                        else
+                        {
+                            pedidoSelecionado.valorPendente_pedido -= valorPago;
+                            Console.WriteLine($"Falta: R$ {pedidoSelecionado.valorPendente_pedido}");
+                            pedidoSelecionado.pago = false;
+                        }
+                    }
+                    else if (formaPagamento == 2)
+                    {
+                        // Implementa na próxima Sprint
+                    }
+                    else
+                    {
+                        Console.WriteLine("Opção inválida de forma de pagamento.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Pedido não encontrado. Verifique o número do pedido.");
+                }
+            }
+
         } while (opcao != 55);
 
 
