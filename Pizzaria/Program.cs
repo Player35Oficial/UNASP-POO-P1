@@ -17,7 +17,7 @@ class Program
             Console.WriteLine("Escolha uma opção:");
             Console.WriteLine("1 - Adicionar Pizza"); // Objetificado
             Console.WriteLine("2 - Listar Pizzas"); // Objetificado
-            Console.WriteLine("3 - Criar Novo Pedido");
+            Console.WriteLine("3 - Criar Novo Pedido"); // Objetificado
             Console.WriteLine("4 - Listar Pedidos"); // Objetificado
             Console.WriteLine("5 - Pagar Pedido");
             Console.WriteLine("55 - SAIR");
@@ -39,44 +39,8 @@ class Program
             else if (opcao == 3)
             {
                 var pedido = new Pedido();
-                Console.WriteLine("Adicionar Pedido!");
+                pedido.AddPedido(listaPizzas);
 
-                Console.WriteLine("Digite o nome do Cliente: ");
-                string nome_cliente = Console.ReadLine()!;
-
-                Console.WriteLine("Digite o Telefone do Cliente: ");
-                string telefone_cliente = Console.ReadLine()!;
-
-                Console.WriteLine("Escolha uma pizza para adicionar: ");
-                foreach (Pizza pizza in listaPizzas)
-                {
-                    Console.WriteLine(pizza.nome + " - " + pizza.preco);
-                }
-
-                int opcaoPedidos = 0;
-                do
-                {
-                    var PizzaByName = Console.ReadLine()!;
-                    Pizza pizzaEncontrada = listaPizzas.Find(item => item.nome == PizzaByName)!;
-                    if (pizzaEncontrada != null)
-                    {
-                        pedido.pizzas_pedido!.Add(pizzaEncontrada);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Pizza não encontrada. Verifique o nome.");
-                    }
-                    Console.WriteLine("Pizzas no pedido:");
-
-                    Console.WriteLine("Deseja acrescentar uma pizza? (1 - SIM | 2 - NÃO)");
-                    opcaoPedidos = int.Parse(Console.ReadLine()!);
-                    if (opcaoPedidos == 1)
-                    {
-                        Console.WriteLine("Escolha uma pizza para adicionar: ");
-                    }
-                } while (opcaoPedidos != 2);
-
-                // Calcular valor final do Pedido;
                 double valorFinal = 0.0;
                 foreach (Pizza pizza in pedido.pizzas_pedido!)
                 {
@@ -85,8 +49,6 @@ class Program
                 }
                 Console.WriteLine("Preço Final: " + valorFinal);
 
-                pedido.nome_cliente = nome_cliente;
-                pedido.telefone_cliente = telefone_cliente;
                 pedido.valorFinal_pedido = valorFinal;
                 pedido.valorPendente_pedido = pedido.valorFinal_pedido;
 
@@ -154,9 +116,6 @@ class Program
                     Console.WriteLine("Pedido não encontrado. Verifique o número do pedido.");
                 }
             }
-
         } while (opcao != 55);
-
-
     }
 }
