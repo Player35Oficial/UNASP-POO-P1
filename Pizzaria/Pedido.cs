@@ -42,7 +42,7 @@ public class Pedido
     }
   }
 
-  public void AddPizzaInPedido(List<Pizza> lista)
+  private void AddPizzaInPedido(List<Pizza> lista)
   {
     Console.WriteLine("Escolha uma pizza para adicionar: ");
     foreach (Pizza pizza in lista)
