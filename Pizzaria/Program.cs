@@ -48,15 +48,6 @@ class Program
             else if (opcao == 2)
             {
                 ListingHelper.ListPizzas(listaPizzas);
-                // Console.WriteLine("LISTAR PIZZAS: ");
-                // foreach (Pizza umaPizza in listaPizzas)
-                // {
-                //     Console.WriteLine("\n");
-                //     Console.WriteLine("<===============>");
-                //     Console.WriteLine("NOME: " + umaPizza.nome);
-                //     Console.WriteLine("SABORES: " + umaPizza.sabores);
-                //     Console.WriteLine("PREÇO: " + umaPizza.preco);
-                // }
             }
             else if (opcao == 3)
             {
@@ -118,23 +109,6 @@ class Program
             else if (opcao == 4)
             {
                 ListingHelper.ListPedido(listaPedidos);
-                // Console.WriteLine("LISTAR PEDIDOS: ");
-                // foreach (Pedido umPedido in listaPedidos)
-                // {
-                //     Console.WriteLine("\n");
-                //     Console.WriteLine("<===============>");
-                //     Console.WriteLine("ID_Cliente: " + umPedido.numeroPedido);
-                //     Console.WriteLine("Cliente: " + umPedido.nome_cliente + " " + umPedido.telefone_cliente);
-                //     Console.WriteLine("Pizzas do Pedido: ");
-                //     foreach (Pizza pizza in umPedido.pizzas_pedido!)
-                //     {
-                //         Console.WriteLine(pizza.nome + " - R$ " + pizza.preco);
-                //     }
-                //     Console.WriteLine("Total: " + umPedido.valorFinal_pedido);
-                //     Console.WriteLine("Quanto falta para pagar: " + umPedido.valorPendente_pedido);
-                //     Console.WriteLine("Pago: " + ((bool)umPedido.pago! ? "Sim" : "Não"));
-                //     Console.WriteLine();
-                // }
             }
             else if (opcao == 5)
             {
