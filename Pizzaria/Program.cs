@@ -15,7 +15,7 @@ class Program
             Console.WriteLine("Bem-vindo ao projeto de Pizzaria!");
 
             Console.WriteLine("Escolha uma opção:");
-            Console.WriteLine("1 - Adicionar Pizza");
+            Console.WriteLine("1 - Adicionar Pizza"); // Objetificado
             Console.WriteLine("2 - Listar Pizzas"); // Objetificado
             Console.WriteLine("3 - Criar Novo Pedido");
             Console.WriteLine("4 - Listar Pedidos"); // Objetificado
@@ -28,20 +28,7 @@ class Program
             if (opcao == 1)
             {
                 var pizza = new Pizza();
-                Console.WriteLine("Adicionar Pizza!");
-
-                Console.WriteLine("Digite o nome da Pizza: ");
-                string nome_pizza = Console.ReadLine()!;
-
-                Console.WriteLine("Digite os sabores da pizza (Separados por vírgula): ");
-                string sabores_pizza = Console.ReadLine()!;
-
-                Console.WriteLine("Digite o preço da Pizza: ");
-                float valor_pizza = float.Parse(Console.ReadLine()!);
-
-                pizza.nome = nome_pizza;
-                pizza.sabores = sabores_pizza;
-                pizza.preco = valor_pizza;
+                pizza.AddPizza();
 
                 listaPizzas.Add(pizza);
             }
